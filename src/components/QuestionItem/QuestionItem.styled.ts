@@ -20,8 +20,9 @@ export const Container = styled.li`
 `;
 
 export const QuestionInput = styled.input`
+  width: 70%;
+
   border: none;
-  border-bottom: 1px solid lightgray;
 
   font-size: 24px;
 `;

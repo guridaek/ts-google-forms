@@ -14,9 +14,9 @@ export interface Question {
 const questions: Question[] = [
   { type: "단답형", text: "단답형 질문입니다." },
   { type: "장문형", text: "장문형 질문입니다." },
-  { type: "객관식", text: "객관식 질문입니다." },
-  { type: "체크박스", text: "체크박스 질문입니다." },
-  { type: "드롭다운", text: "드롭다운 질문입니다." },
+  { type: "객관식", text: "객관식 질문입니다.", options: ["선택지 1", "선택지 2", "선택지 3"] },
+  { type: "체크박스", text: "체크박스 질문입니다.", options: ["선택지 1", "선택지 2", "선택지 3"] },
+  { type: "드롭다운", text: "드롭다운 질문입니다.", options: ["선택지 1", "선택지 2", "선택지 3"] },
 ];
 
 function QuestionItemList() {
