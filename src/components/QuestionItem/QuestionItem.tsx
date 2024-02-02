@@ -9,6 +9,8 @@ import {
   setQuestion,
   questionTypes,
   selectQuestionById,
+  duplicateQuestionById,
+  removeQuestionById,
 } from "../../redux/slice/surveySlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
@@ -35,6 +37,16 @@ function QuestionItem({ questionId }: Props) {
     dispatch(setQuestion({ ...question, isRequired: e.target.checked }));
   };
 
+  const handleDuplicateButtonClick = () => {
+    dispatch(duplicateQuestionById(questionId));
+  };
+
+  const handleRemoveButtonClick = () => {
+    if (confirm("정말로 삭제하시겠습니까?")) {
+      dispatch(removeQuestionById(questionId));
+    }
+  };
+
   return (
     <S.Container>
       <S.DraggableIcon src={dotsSixImg} />
@@ -55,8 +67,8 @@ function QuestionItem({ questionId }: Props) {
       </S.Row>
       <S.Row>
         <S.BottomIcons>
-          <S.Icon src={copyImg} width="24px" />
-          <S.Icon src={trashCanImg} width="24px" />
+          <S.Icon src={copyImg} width="24px" onClick={handleDuplicateButtonClick} />
+          <S.Icon src={trashCanImg} width="24px" onClick={handleRemoveButtonClick} />
         </S.BottomIcons>
         필수
         <S.ToggleButton

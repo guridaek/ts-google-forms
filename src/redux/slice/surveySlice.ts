@@ -55,11 +55,30 @@ export const surveySlice = createSlice({
         return question.id === action.payload.id ? action.payload : question;
       });
     },
+    duplicateQuestionById: (state, action: PayloadAction<string>) => {
+      const index = state.questionList.findIndex((question) => question.id === action.payload);
+
+      if (index === -1) return;
+
+      const updatedList = [...state.questionList];
+      updatedList.splice(index + 1, 0, {
+        ...state.questionList[index],
+        id: new Date().getTime().toString(),
+      });
+
+      state.questionList = updatedList;
+    },
   },
 });
 
-export const { setTitle, setDescription, addQuestion, removeQuestionById, setQuestion } =
-  surveySlice.actions;
+export const {
+  setTitle,
+  setDescription,
+  addQuestion,
+  removeQuestionById,
+  setQuestion,
+  duplicateQuestionById,
+} = surveySlice.actions;
 
 export const selectTitle = (state: RootState) => state.survey.title;
 
