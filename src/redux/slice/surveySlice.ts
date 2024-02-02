@@ -5,12 +5,17 @@ export const questionTypes = ["단답형", "장문형", "객관식", "체크박�
 
 export type QuestionType = (typeof questionTypes)[number];
 
+export interface Option {
+  id: string;
+  text: string;
+}
+
 export interface Question {
   id: string;
   type: QuestionType;
   text: string;
   isRequired: boolean;
-  options?: string[];
+  options: Option[];
 }
 
 export interface SurveyState {
@@ -43,7 +48,7 @@ export const surveySlice = createSlice({
           type: "객관식",
           text: "",
           isRequired: false,
-          options: ["옵션 1"],
+          options: [{ id: new Date().getTime().toString(), text: "옵션 1" }],
         },
       ];
     },
@@ -68,6 +73,24 @@ export const surveySlice = createSlice({
 
       state.questionList = updatedList;
     },
+    addOptionById: (state, action: PayloadAction<string>) => {
+      state.questionList = state.questionList.map((question) => {
+        if (question.id === action.payload) {
+          return {
+            ...question,
+            options: [
+              ...question.options,
+              {
+                id: new Date().getTime().toString(),
+                text: `옵션 ${question.options.length + 1}`,
+              },
+            ],
+          };
+        }
+
+        return question;
+      });
+    },
   },
 });
 
@@ -78,6 +101,7 @@ export const {
   removeQuestionById,
   setQuestion,
   duplicateQuestionById,
+  addOptionById,
 } = surveySlice.actions;
 
 export const selectTitle = (state: RootState) => state.survey.title;
