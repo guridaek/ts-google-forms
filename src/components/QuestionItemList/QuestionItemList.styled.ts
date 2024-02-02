@@ -6,6 +6,7 @@ export const Container = styled.ul`
   flex-direction: column;
 
   width: 100%;
+
   gap: 20px;
 `;
 
@@ -26,5 +27,4 @@ export const descriptionInput = styled.input`
   border-bottom: 1px solid lightgray;
 
   font-size: 18px;
-  color: gray;
 `;

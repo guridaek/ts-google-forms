@@ -27,19 +27,8 @@ const initialState: SurveyState = {
 
 export const surveySlice = createSlice({
   name: "survey",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   state.value += 1;
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1;
-    // },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
@@ -47,18 +36,30 @@ export const surveySlice = createSlice({
       state.description = action.payload;
     },
     addQuestion: (state) => {
-      state.questionList.push({
-        id: new Date().getTime().toString(),
-        type: "객관식",
-        text: "",
-        isRequired: false,
-        options: ["옵션 1"],
+      state.questionList = [
+        ...state.questionList,
+        {
+          id: new Date().getTime().toString(),
+          type: "객관식",
+          text: "",
+          isRequired: false,
+          options: ["옵션 1"],
+        },
+      ];
+    },
+    removeQuestionById: (state, action: PayloadAction<string>) => {
+      state.questionList = state.questionList.filter((question) => question.id !== action.payload);
+    },
+    setQuestion: (state, action: PayloadAction<Question>) => {
+      state.questionList = state.questionList.map((question) => {
+        return question.id === action.payload.id ? action.payload : question;
       });
     },
   },
 });
 
-export const { setTitle, setDescription, addQuestion } = surveySlice.actions;
+export const { setTitle, setDescription, addQuestion, removeQuestionById, setQuestion } =
+  surveySlice.actions;
 
 export const selectTitle = (state: RootState) => state.survey.title;
 
@@ -66,7 +67,7 @@ export const selectDescription = (state: RootState) => state.survey.description;
 
 export const selectQuestionList = (state: RootState) => state.survey.questionList;
 
-export const selectQuestionById = (state: RootState, id: string) =>
+export const selectQuestionById = (id: string) => (state: RootState) =>
   state.survey.questionList.find((question) => question.id === id);
 
 export default surveySlice.reducer;

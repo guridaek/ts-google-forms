@@ -1,32 +1,56 @@
-import { HTMLAttributes } from "react";
+import { ChangeEvent, HTMLAttributes } from "react";
 import * as S from "./QuestionItem.styled";
-import { Question, questionTypes } from "../QuestionItemList/QuestionItemList";
 import dotsSixImg from "../../assets/dotsSix.svg";
 import copyImg from "../../assets/copy.svg";
 import trashCanImg from "../../assets/trashCan.svg";
 import OptionList from "./OptionList/OptionList";
+import {
+  QuestionType,
+  setQuestion,
+  questionTypes,
+  selectQuestionById,
+} from "../../redux/slice/surveySlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
-  question: Question;
+  questionId: string;
 }
 
-function QuestionItem({ question }: Props) {
+function QuestionItem({ questionId }: Props) {
+  const dispatch = useAppDispatch();
+
+  const question = useAppSelector(selectQuestionById(questionId))!;
+
+  if (!question) return null;
+
+  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setQuestion({ ...question, text: e.target.value }));
+  };
+
+  const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setQuestion({ ...question, type: e.target.value as QuestionType }));
+  };
+
+  const handleIsRequiredChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setQuestion({ ...question, isRequired: e.target.checked }));
+  };
+
   return (
     <S.Container>
       <S.DraggableIcon src={dotsSixImg} />
       <S.Row>
-        <S.QuestionInput placeholder="질문" value={question.text} />
-        <S.TypeSelect>
+        <S.QuestionInput placeholder="질문" value={question?.text} onChange={handleTextChange} />
+        <S.TypeSelect defaultValue={question.type} onChange={handleTypeChange}>
           {questionTypes.map((type) => (
-            <S.TypeOption selected={question.type === type}>{type}</S.TypeOption>
+            <S.TypeOption key={type}>{type}</S.TypeOption>
           ))}
         </S.TypeSelect>
       </S.Row>
       <S.Row>
-        {question.options ? (
-          <OptionList type={question.type} options={question.options} />
+        {["단답형", "장문형"].includes(question.type) ? (
+          <S.Answer>{`${question?.type} 텍스트`}</S.Answer>
         ) : (
-          <S.Answer>{`${question.type} 텍스트`}</S.Answer>
+          <OptionList questionId={questionId} />
         )}
       </S.Row>
       <S.Row>
@@ -35,7 +59,11 @@ function QuestionItem({ question }: Props) {
           <S.Icon src={trashCanImg} width="24px" />
         </S.BottomIcons>
         필수
-        <S.ToggleButton type="checkbox" />
+        <S.ToggleButton
+          type="checkbox"
+          defaultChecked={question?.isRequired}
+          onChange={handleIsRequiredChange}
+        />
       </S.Row>
     </S.Container>
   );
