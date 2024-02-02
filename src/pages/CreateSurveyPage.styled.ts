@@ -5,4 +5,17 @@ export const Container = styled.main`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+
+  width: 100%;
+  height: 100%;
+`;
+
+export const Body = styled.div`
+  display: flex;
+  gap: 14px;
+
+  width: 60%;
+
+  margin-left: auto;
+  margin-right: auto;
 `;

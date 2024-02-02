@@ -8,7 +8,7 @@ export const Container = styled.header`
   width: 100vw;
   height: 8vh;
 
-  padding-right: 20vw;
+  padding-right: 40vw;
 
   background-color: white;
 
