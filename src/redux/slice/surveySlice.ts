@@ -16,6 +16,7 @@ export interface Question {
   text: string;
   isRequired: boolean;
   options: Option[];
+  hasOtherOption: boolean;
 }
 
 export interface SurveyState {
@@ -49,6 +50,7 @@ export const surveySlice = createSlice({
           text: "",
           isRequired: false,
           options: [{ id: new Date().getTime().toString(), text: "옵션 1" }],
+          hasOtherOption: false,
         },
       ];
     },
