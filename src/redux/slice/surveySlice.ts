@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-export const questionTypes = ["단답형", "장문형", "객관식", "체크박스", "드롭다운"] as const;
+export const questionTypes = ["단답형", "장문형", "객관식 질문", "체크박스", "드롭다운"] as const;
 
 export type QuestionType = (typeof questionTypes)[number];
 
@@ -46,7 +46,7 @@ export const surveySlice = createSlice({
         ...state.questionList,
         {
           id: new Date().getTime().toString(),
-          type: "객관식",
+          type: "객관식 질문",
           text: "",
           isRequired: false,
           options: [{ id: new Date().getTime().toString(), text: "옵션 1" }],
