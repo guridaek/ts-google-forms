@@ -6,14 +6,16 @@ export const Container = styled.header`
   flex-direction: row-reverse;
   align-items: center;
 
-  width: 100vw;
-  height: 8vh;
-
-  padding-right: 40vw;
+  width: 100%;
+  height: 10%;
 
   background-color: white;
 
   cursor: pointer;
+
+  button {
+    right: 25%;
+  }
 `;
 
 export const Button = styled(Fab)`
