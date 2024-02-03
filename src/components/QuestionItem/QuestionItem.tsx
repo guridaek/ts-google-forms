@@ -13,6 +13,8 @@ import {
   removeQuestionById,
 } from "../../redux/slice/surveySlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { SelectChangeEvent, Switch, Tooltip } from "@mui/material";
+import { Button } from "../MenuBar/MenuBar.styled";
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
   questionId: string;
@@ -29,7 +31,7 @@ function QuestionItem({ questionId }: Props) {
     dispatch(setQuestion({ ...question, text: e.target.value }));
   };
 
-  const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleTypeChange = (e: SelectChangeEvent<unknown>) => {
     dispatch(setQuestion({ ...question, type: e.target.value as QuestionType }));
   };
 
@@ -51,10 +53,19 @@ function QuestionItem({ questionId }: Props) {
     <S.Container>
       <S.DraggableIcon src={dotsSixImg} />
       <S.Row>
-        <S.QuestionInput placeholder="질문" value={question?.text} onChange={handleTextChange} />
-        <S.TypeSelect defaultValue={question.type} onChange={handleTypeChange}>
+        <S.QuestionInput
+          variant="filled"
+          size="small"
+          fullWidth={true}
+          placeholder="질문"
+          value={question?.text}
+          onChange={handleTextChange}
+        />
+        <S.TypeSelect value={question.type} onChange={handleTypeChange}>
           {questionTypes.map((type) => (
-            <S.TypeOption key={type}>{type}</S.TypeOption>
+            <S.TypeOption key={type} value={type}>
+              {type}
+            </S.TypeOption>
           ))}
         </S.TypeSelect>
       </S.Row>
@@ -67,15 +78,20 @@ function QuestionItem({ questionId }: Props) {
       </S.Row>
       <S.Row>
         <S.BottomIcons>
-          <S.Icon src={copyImg} width="24px" onClick={handleDuplicateButtonClick} />
-          <S.Icon src={trashCanImg} width="24px" onClick={handleRemoveButtonClick} />
+          <Tooltip title="복사">
+            <Button size="small">
+              <S.Icon src={copyImg} width="24px" onClick={handleDuplicateButtonClick} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="삭제">
+            <Button size="small">
+              <S.Icon src={trashCanImg} width="24px" onClick={handleRemoveButtonClick} />
+            </Button>
+          </Tooltip>
         </S.BottomIcons>
+        <S.VerticalBar></S.VerticalBar>
         필수
-        <S.ToggleButton
-          type="checkbox"
-          defaultChecked={question?.isRequired}
-          onChange={handleIsRequiredChange}
-        />
+        <Switch checked={question?.isRequired} onChange={handleIsRequiredChange} />
       </S.Row>
     </S.Container>
   );

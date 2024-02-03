@@ -29,12 +29,14 @@ function QuestionItemList() {
     <S.Container>
       <S.SurveyTitleContainer>
         <S.titleInput
+          variant="standard"
           type="text"
           value={title}
           placeholder="설문지 제목"
           onChange={handleTitleChange}
         />
         <S.descriptionInput
+          variant="standard"
           type="text"
           value={description}
           placeholder="설문지 설명"

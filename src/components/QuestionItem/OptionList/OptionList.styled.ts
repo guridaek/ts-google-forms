@@ -1,14 +1,20 @@
+import { TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const Container = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 
   width: 100%;
 `;
 
 export const Option = styled.li`
+  position: relative;
+
+  width: 100%;
+  height: 42px;
+
   display: flex;
   align-items: center;
   gap: 10px;
@@ -16,23 +22,15 @@ export const Option = styled.li`
 
 export const OptionButton = styled.input``;
 
-export const OptionInput = styled.input`
-  width: 80%;
-
-  border: none;
-
-  font-size: 16px;
+export const OptionInput = styled(TextField)`
+  ::before {
+    border-bottom: none !important;
+  }
 `;
 
-export const removeButton = styled.button`
-  margin-left: auto;
-
-  border: none;
-
-  background: transparent;
-  font-size: 18px;
-
-  cursor: pointer;
+export const OtherOption = styled.p`
+  width: 100%;
+  color: gray;
 `;
 
 export const addButton = styled.button`
@@ -43,4 +41,17 @@ export const addButton = styled.button`
   color: #1a73e8;
 
   cursor: pointer;
+`;
+
+export const DraggableIcon = styled.img`
+  position: absolute;
+  left: -18px;
+
+  width: 20px;
+
+  cursor: move;
+`;
+
+export const CloseIcon = styled.img`
+  width: 24px;
 `;

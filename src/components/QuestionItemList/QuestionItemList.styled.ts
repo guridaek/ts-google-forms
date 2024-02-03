@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import * as QuestionItem from "../QuestionItem/QuestionItem.styled";
+import { TextField } from "@mui/material";
 
 export const Container = styled.ul`
   display: flex;
@@ -15,16 +16,22 @@ export const SurveyTitleContainer = styled(QuestionItem.Container)`
   padding-top: 20px;
 `;
 
-export const titleInput = styled.input`
-  border: none;
-  border-bottom: 1px solid lightgray;
+export const titleInput = styled(TextField)`
+  ::before {
+    border-bottom: none !important;
+  }
 
-  font-size: 38px;
+  div {
+    font-size: 38px;
+  }
 `;
 
-export const descriptionInput = styled.input`
-  border: none;
-  border-bottom: 1px solid lightgray;
+export const descriptionInput = styled(TextField)`
+  ::before {
+    border-bottom: none !important;
+  }
 
-  font-size: 18px;
+  div {
+    font-size: 18px;
+  }
 `;

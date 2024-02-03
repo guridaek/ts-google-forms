@@ -2,6 +2,10 @@ import { ChangeEvent, MouseEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setQuestion, selectQuestionById, addOptionById } from "../../../redux/slice/surveySlice";
 import * as S from "./OptionList.styled";
+import dotsSixVerticalImg from "../../../assets/dotsSixVertical.svg";
+import closeImg from "../../../assets/close.svg";
+import { Button } from "../../MenuBar/MenuBar.styled";
+import { Tooltip } from "@mui/material";
 
 interface Props {
   questionId: string;
@@ -70,32 +74,44 @@ function OptionList({ questionId }: Props) {
   };
 
   switch (type) {
-    case "객관식":
+    case "객관식 질문":
       return (
         <S.Container>
           {options.map((option, idx) => (
             <S.Option key={option.id}>
+              <S.DraggableIcon src={dotsSixVerticalImg} />
               <S.OptionButton type="radio" checked={false} readOnly={true} />
               <S.OptionInput
+                variant="standard"
+                fullWidth={true}
                 name={`option-${idx}`}
                 value={option.text}
                 onChange={handleOptionChange}
               />
-              <S.removeButton name={`remove-option-${idx}`} onClick={handleRemoveButtonClick}>
-                X
-              </S.removeButton>
+              <Tooltip title="삭제">
+                <Button
+                  size="small"
+                  name={`remove-option-${idx}`}
+                  onClick={handleRemoveButtonClick}
+                >
+                  <S.CloseIcon src={closeImg} width="26px" />
+                </Button>
+              </Tooltip>
             </S.Option>
           ))}
           {hasOtherOption && (
             <S.Option>
               <S.OptionButton type="radio" checked={false} readOnly={true} />
-              <S.OptionInput name={"option-extra"} value="기타..." readOnly={true} />
-              <S.removeButton
-                name={"remove-option-extra"}
-                onClick={handleRemoveOtherOptionButtonClick}
-              >
-                X
-              </S.removeButton>
+              <S.OtherOption>기타...</S.OtherOption>
+              <Tooltip title="삭제">
+                <Button
+                  size="small"
+                  name={"remove-option-extra"}
+                  onClick={handleRemoveOtherOptionButtonClick}
+                >
+                  <S.CloseIcon src={closeImg} width="26px" />
+                </Button>
+              </Tooltip>
             </S.Option>
           )}
           <S.Option>
@@ -116,27 +132,39 @@ function OptionList({ questionId }: Props) {
         <S.Container>
           {options.map((option, idx) => (
             <S.Option key={option.id}>
+              <S.DraggableIcon src={dotsSixVerticalImg} />
               <S.OptionButton type="checkbox" checked={false} readOnly={true} />
               <S.OptionInput
+                variant="standard"
+                fullWidth={true}
                 name={`option-${idx}`}
                 value={option.text}
                 onChange={handleOptionChange}
               />
-              <S.removeButton name={`remove-option-${idx}`} onClick={handleRemoveButtonClick}>
-                X
-              </S.removeButton>
+              <Tooltip title="삭제">
+                <Button
+                  size="small"
+                  name={`remove-option-${idx}`}
+                  onClick={handleRemoveButtonClick}
+                >
+                  <S.CloseIcon src={closeImg} />
+                </Button>
+              </Tooltip>
             </S.Option>
           ))}
           {hasOtherOption && (
             <S.Option>
               <S.OptionButton type="checkbox" checked={false} readOnly={true} />
-              <S.OptionInput name={"option-extra"} value="기타..." readOnly={true} />
-              <S.removeButton
-                name={"remove-option-extra"}
-                onClick={handleRemoveOtherOptionButtonClick}
-              >
-                X
-              </S.removeButton>
+              <S.OtherOption>기타...</S.OtherOption>
+              <Tooltip title="삭제">
+                <Button
+                  size="small"
+                  name={"remove-option-extra"}
+                  onClick={handleRemoveOtherOptionButtonClick}
+                >
+                  <S.CloseIcon src={closeImg} />
+                </Button>
+              </Tooltip>
             </S.Option>
           )}
           <S.Option>
@@ -158,15 +186,24 @@ function OptionList({ questionId }: Props) {
         <S.Container>
           {options.map((option, idx) => (
             <S.Option key={option.id}>
+              <S.DraggableIcon src={dotsSixVerticalImg} />
               {idx + 1}
               <S.OptionInput
+                variant="standard"
+                fullWidth={true}
                 name={`option-${idx}`}
                 value={option.text}
                 onChange={handleOptionChange}
               />
-              <S.removeButton name={`remove-option-${idx}`} onClick={handleRemoveButtonClick}>
-                X
-              </S.removeButton>
+              <Tooltip title="삭제">
+                <Button
+                  size="small"
+                  name={`remove-option-${idx}`}
+                  onClick={handleRemoveButtonClick}
+                >
+                  <S.CloseIcon src={closeImg} />
+                </Button>
+              </Tooltip>
             </S.Option>
           ))}
           <S.Option>

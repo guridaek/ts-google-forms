@@ -1,3 +1,4 @@
+import { MenuItem, Select, TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const Container = styled.li`
@@ -8,7 +9,7 @@ export const Container = styled.li`
   width: 100%;
   border: 1px solid lightgray;
   border-radius: 8px;
-  padding: 0 20px 10px 20px;
+  padding: 0 20px 5px 20px;
   box-sizing: border-box;
 
   background-color: white;
@@ -19,12 +20,11 @@ export const Container = styled.li`
   }
 `;
 
-export const QuestionInput = styled.input`
-  width: 70%;
-
-  border: none;
-
-  font-size: 24px;
+export const QuestionInput = styled(TextField)`
+  div {
+    padding-bottom: 12px;
+  }
+  /* font-size: 24px; */
 `;
 
 export const Description = styled.p`
@@ -37,6 +37,10 @@ export const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+
+  &:last-child {
+    border-top: 1px solid lightgray;
+  }
 `;
 
 export const DraggableIcon = styled.img`
@@ -48,12 +52,12 @@ export const DraggableIcon = styled.img`
   cursor: move;
 `;
 
-export const TypeSelect = styled.select`
-  width: 140px;
-  height: 40px;
+export const TypeSelect = styled(Select)`
+  width: 40%;
+  height: 80%;
 `;
 
-export const TypeOption = styled.option``;
+export const TypeOption = styled(MenuItem)``;
 
 export const Answer = styled.div`
   width: 70%;
@@ -66,11 +70,8 @@ export const Answer = styled.div`
 
 export const BottomIcons = styled.div`
   display: flex;
-  gap: 20px;
   margin-left: auto;
-  padding: 0 20px;
-
-  border-right: 1px solid lightgray;
+  padding: 10px 10px;
 `;
 
 export const Icon = styled.img`
@@ -78,3 +79,12 @@ export const Icon = styled.img`
 `;
 
 export const ToggleButton = styled.input``;
+
+export const VerticalBar = styled.div`
+  width: 0;
+  height: 50%;
+
+  margin-right: 16px;
+
+  border-left: 1px solid lightgray;
+`;

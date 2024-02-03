@@ -1,3 +1,4 @@
+import { Fab } from "@mui/material";
 import styled from "styled-components";
 
 export const Container = styled.header`
@@ -13,6 +14,15 @@ export const Container = styled.header`
   background-color: white;
 
   cursor: pointer;
+`;
+
+export const Button = styled(Fab)`
+  background-color: white !important;
+  box-shadow: none !important;
+
+  &:hover {
+    background-color: #f0f0f0 !important;
+  }
 `;
 
 export const Icon = styled.img``;
