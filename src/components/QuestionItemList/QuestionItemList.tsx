@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
+  reorderQuestion,
   selectDescription,
   selectQuestionList,
   selectTitle,
@@ -9,6 +10,7 @@ import {
 } from "../../redux/slice/surveySlice";
 import QuestionItem from "../QuestionItem/QuestionItem";
 import * as S from "./QuestionItemList.styled";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 function QuestionItemList() {
   const dispatch = useAppDispatch();
@@ -23,6 +25,21 @@ function QuestionItemList() {
 
   const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setDescription(e.target.value));
+  };
+
+  const handleDragEnd = ({ destination, source }: DropResult) => {
+    if (!destination) {
+      return;
+    }
+
+    if (source.droppableId === "questionItemList") {
+      dispatch(
+        reorderQuestion({
+          startIndex: source.index,
+          endIndex: destination.index,
+        })
+      );
+    }
   };
 
   return (
@@ -43,9 +60,18 @@ function QuestionItemList() {
           onChange={handleDescriptionChange}
         />
       </S.SurveyTitleContainer>
-      {questions.map((question) => (
-        <QuestionItem key={question.id} questionId={question.id} />
-      ))}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="questionItemList" direction="vertical">
+          {(provided) => (
+            <S.SurveyListContainer {...provided.droppableProps} ref={provided.innerRef}>
+              {questions.map((question, idx) => (
+                <QuestionItem key={question.id} questionId={question.id} index={idx} />
+              ))}
+              {provided.placeholder}
+            </S.SurveyListContainer>
+          )}
+        </Droppable>
+      </DragDropContext>
     </S.Container>
   );
 }

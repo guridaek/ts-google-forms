@@ -24,7 +24,6 @@ export const QuestionInput = styled(TextField)`
   div {
     padding-bottom: 12px;
   }
-  /* font-size: 24px; */
 `;
 
 export const Description = styled.p`

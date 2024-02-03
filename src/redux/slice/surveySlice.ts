@@ -31,6 +31,11 @@ const initialState: SurveyState = {
   questionList: [],
 };
 
+interface ReorderPayload {
+  startIndex: number;
+  endIndex: number;
+}
+
 export const surveySlice = createSlice({
   name: "survey",
   initialState,
@@ -93,6 +98,15 @@ export const surveySlice = createSlice({
         return question;
       });
     },
+    reorderQuestion: (state, action: PayloadAction<ReorderPayload>) => {
+      const { startIndex, endIndex } = action.payload;
+
+      const updatedList = [...state.questionList];
+      const [removedQuestion] = updatedList.splice(startIndex, 1);
+      updatedList.splice(endIndex, 0, removedQuestion);
+
+      state.questionList = updatedList;
+    },
   },
 });
 
@@ -104,6 +118,7 @@ export const {
   setQuestion,
   duplicateQuestionById,
   addOptionById,
+  reorderQuestion,
 } = surveySlice.actions;
 
 export const selectTitle = (state: RootState) => state.survey.title;

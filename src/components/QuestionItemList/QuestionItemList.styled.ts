@@ -16,6 +16,15 @@ export const SurveyTitleContainer = styled(QuestionItem.Container)`
   padding-top: 20px;
 `;
 
+export const SurveyListContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  gap: 20px;
+`;
+
 export const titleInput = styled(TextField)`
   ::before {
     border-bottom: none !important;
