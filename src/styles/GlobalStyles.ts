@@ -5,9 +5,8 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   body {
+    font-family: 'Roboto', 'sans-serif';
     background-color: #f0ebf8;
-
-    font-family: sans-serif;
   }
 `;
 
