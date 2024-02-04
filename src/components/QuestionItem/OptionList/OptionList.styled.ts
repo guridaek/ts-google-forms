@@ -5,7 +5,7 @@ export const Container = styled.ul`
   width: 100%;
 `;
 
-export const Option = styled.li`
+export const Option = styled.li<{ $isFocused?: boolean }>`
   position: relative;
 
   width: 100%;
@@ -14,6 +14,12 @@ export const Option = styled.li`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  &:hover {
+    img:first-child {
+      visibility: ${({ $isFocused }) => $isFocused && "visible"};
+    }
+  }
 `;
 
 export const OptionButton = styled.input``;
@@ -40,6 +46,8 @@ export const addButton = styled.button`
 `;
 
 export const DraggableIcon = styled.img`
+  visibility: hidden;
+
   position: absolute;
   left: -18px;
 

@@ -5,6 +5,7 @@ import {
   addOptionById,
   removeOption,
   reorderOption,
+  selectFocusedQuestionIndex,
   selectQuestionList,
   setOption,
 } from "../../../../redux/slice/surveySlice";
@@ -20,6 +21,7 @@ interface Props extends HTMLAttributes<HTMLLIElement> {
 
 function Dropdown({ questionIndex }: Props) {
   const question = useAppSelector(selectQuestionList)[questionIndex];
+  const isFocused = useAppSelector(selectFocusedQuestionIndex) === questionIndex;
   const dispatch = useAppDispatch();
 
   const { options } = question;
@@ -63,7 +65,12 @@ function Dropdown({ questionIndex }: Props) {
               {options.map((option, idx) => (
                 <Draggable key={option.id} draggableId={option.id} index={idx}>
                   {(provided) => (
-                    <S.Option key={option.id} ref={provided.innerRef} {...provided.draggableProps}>
+                    <S.Option
+                      key={option.id}
+                      ref={provided.innerRef}
+                      $isFocused={isFocused}
+                      {...provided.draggableProps}
+                    >
                       <S.DraggableIcon src={dotsSixVerticalImg} {...provided.dragHandleProps} />
                       {idx + 1}
                       <S.OptionInput
@@ -73,11 +80,13 @@ function Dropdown({ questionIndex }: Props) {
                         value={option.text}
                         onChange={handleOptionChange}
                       />
-                      <Tooltip title="삭제">
-                        <Button size="small" name={option.id} onClick={handleRemoveButtonClick}>
-                          <S.CloseIcon src={closeImg} />
-                        </Button>
-                      </Tooltip>
+                      {isFocused && (
+                        <Tooltip title="삭제">
+                          <Button size="small" name={option.id} onClick={handleRemoveButtonClick}>
+                            <S.CloseIcon src={closeImg} />
+                          </Button>
+                        </Tooltip>
+                      )}
                     </S.Option>
                   )}
                 </Draggable>
@@ -87,10 +96,12 @@ function Dropdown({ questionIndex }: Props) {
           )}
         </Droppable>
       </DragDropContext>
-      <S.Option>
-        {options.length + 1}
-        <S.addButton onClick={handleAddButtonClick}>옵션 추가</S.addButton>
-      </S.Option>
+      {isFocused && (
+        <S.Option>
+          {options.length + 1}
+          <S.addButton onClick={handleAddButtonClick}>옵션 추가</S.addButton>
+        </S.Option>
+      )}
     </S.Container>
   );
 }

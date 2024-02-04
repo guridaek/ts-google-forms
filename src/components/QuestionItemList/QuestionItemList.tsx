@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
+  focusQuestion,
   reorderQuestion,
   selectDescription,
   selectQuestionList,
@@ -42,9 +43,13 @@ function QuestionItemList() {
     }
   };
 
+  const handleTitleClick = () => {
+    dispatch(focusQuestion(-1));
+  };
+
   return (
     <S.Container>
-      <S.SurveyTitleContainer>
+      <S.SurveyTitleContainer onClick={handleTitleClick}>
         <S.titleInput
           variant="standard"
           type="text"

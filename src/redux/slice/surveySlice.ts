@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
+// import { questions } from "../../mocks/questions";
 
 export const questionTypes = ["단답형", "장문형", "객관식 질문", "체크박스", "드롭다운"] as const;
 
@@ -23,12 +24,14 @@ export interface SurveyState {
   title: string;
   description: string;
   questionList: Question[];
+  focusedQuestionIndex: number;
 }
 
 const initialState: SurveyState = {
   title: "제목 없는 설문지",
   description: "",
   questionList: [],
+  focusedQuestionIndex: -1,
 };
 
 interface ReorderQuestionPayload {
@@ -156,6 +159,9 @@ export const surveySlice = createSlice({
         idx === questionIndex ? { ...question, options: updatedOptions } : question
       );
     },
+    focusQuestion: (state, action: PayloadAction<number>) => {
+      state.focusedQuestionIndex = action.payload;
+    },
   },
 });
 
@@ -171,6 +177,7 @@ export const {
   reorderOption,
   setOption,
   removeOption,
+  focusQuestion,
 } = surveySlice.actions;
 
 export const selectTitle = (state: RootState) => state.survey.title;
@@ -181,5 +188,7 @@ export const selectQuestionList = (state: RootState) => state.survey.questionLis
 
 export const selectQuestionById = (id: string) => (state: RootState) =>
   state.survey.questionList.find((question) => question.id === id);
+
+export const selectFocusedQuestionIndex = (state: RootState) => state.survey.focusedQuestionIndex;
 
 export default surveySlice.reducer;

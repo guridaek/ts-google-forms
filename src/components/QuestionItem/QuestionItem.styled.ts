@@ -1,7 +1,7 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import styled from "styled-components";
 
-export const Container = styled.li`
+export const Container = styled.li<{ $isFocused: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -14,15 +14,18 @@ export const Container = styled.li`
 
   background-color: white;
 
-  &:focus-within {
-    border-left: 7px solid skyblue;
-    padding-left: 14px;
-  }
+  border-left: ${({ $isFocused }) => $isFocused && "7px solid skyblue"};
+  padding-left: ${({ $isFocused }) => $isFocused && "14px"};
 `;
 
-export const QuestionInput = styled(TextField)`
+export const QuestionInput = styled(TextField)<{ $isFocused: boolean }>`
   div {
     padding-bottom: 12px;
+  }
+
+  ::before,
+  ::after {
+    border-bottom: ${({ $isFocused }) => ($isFocused ? "" : "none !important")};
   }
 `;
 
@@ -36,10 +39,6 @@ export const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-
-  &:last-child {
-    border-top: 1px solid lightgray;
-  }
 `;
 
 export const DraggableIcon = styled.img`
@@ -63,6 +62,7 @@ export const Answer = styled.div`
 
   border-bottom: 1px dotted black;
   padding-bottom: 8px;
+  margin-bottom: 20px;
 
   color: gray;
 `;
@@ -86,4 +86,8 @@ export const VerticalBar = styled.div`
   margin-right: 16px;
 
   border-left: 1px solid lightgray;
+`;
+
+export const Footer = styled(Row)`
+  border-top: 1px solid lightgray;
 `;

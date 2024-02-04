@@ -5,6 +5,7 @@ import {
   addOptionById,
   removeOption,
   reorderOption,
+  selectFocusedQuestionIndex,
   selectQuestionList,
   setOption,
   setQuestion,
@@ -22,6 +23,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 function Checkbox({ questionIndex }: Props) {
   const question = useAppSelector(selectQuestionList)[questionIndex];
   const dispatch = useAppDispatch();
+  const isFocused = useAppSelector(selectFocusedQuestionIndex) === questionIndex;
 
   const { options, hasOtherOption } = question;
 
@@ -86,7 +88,12 @@ function Checkbox({ questionIndex }: Props) {
               {options.map((option, idx) => (
                 <Draggable key={option.id} draggableId={option.id} index={idx}>
                   {(provided) => (
-                    <S.Option key={option.id} ref={provided.innerRef} {...provided.draggableProps}>
+                    <S.Option
+                      key={option.id}
+                      ref={provided.innerRef}
+                      $isFocused={isFocused}
+                      {...provided.draggableProps}
+                    >
                       <S.DraggableIcon src={dotsSixVerticalImg} {...provided.dragHandleProps} />
                       <S.OptionButton type="checkbox" checked={false} readOnly={true} />
                       <S.OptionInput
@@ -96,11 +103,13 @@ function Checkbox({ questionIndex }: Props) {
                         value={option.text}
                         onChange={handleOptionChange}
                       />
-                      <Tooltip title="삭제">
-                        <Button size="small" name={option.id} onClick={handleRemoveButtonClick}>
-                          <S.CloseIcon src={closeImg} />
-                        </Button>
-                      </Tooltip>
+                      {isFocused && (
+                        <Tooltip title="삭제">
+                          <Button size="small" name={option.id} onClick={handleRemoveButtonClick}>
+                            <S.CloseIcon src={closeImg} />
+                          </Button>
+                        </Tooltip>
+                      )}
                     </S.Option>
                   )}
                 </Draggable>
@@ -114,27 +123,31 @@ function Checkbox({ questionIndex }: Props) {
         <S.Option>
           <S.OptionButton type="checkbox" checked={false} readOnly={true} />
           <S.OtherOption>기타...</S.OtherOption>
-          <Tooltip title="삭제">
-            <Button
-              size="small"
-              name={"remove-option-extra"}
-              onClick={handleRemoveOtherOptionButtonClick}
-            >
-              <S.CloseIcon src={closeImg} />
-            </Button>
-          </Tooltip>
+          {isFocused && (
+            <Tooltip title="삭제">
+              <Button
+                size="small"
+                name={"remove-option-extra"}
+                onClick={handleRemoveOtherOptionButtonClick}
+              >
+                <S.CloseIcon src={closeImg} />
+              </Button>
+            </Tooltip>
+          )}
         </S.Option>
       )}
-      <S.Option>
-        <S.OptionButton type="checkbox" checked={false} readOnly={true} />
-        <S.addButton onClick={handleAddButtonClick}>옵션 추가</S.addButton>
-        {!hasOtherOption && (
-          <>
-            또는
-            <S.addButton onClick={handleAddOtherOptionButtonClick}>'기타' 추가</S.addButton>
-          </>
-        )}
-      </S.Option>
+      {isFocused && (
+        <S.Option>
+          <S.OptionButton type="checkbox" checked={false} readOnly={true} />
+          <S.addButton onClick={handleAddButtonClick}>옵션 추가</S.addButton>
+          {!hasOtherOption && (
+            <>
+              또는
+              <S.addButton onClick={handleAddOtherOptionButtonClick}>'기타' 추가</S.addButton>
+            </>
+          )}
+        </S.Option>
+      )}
     </S.Container>
   );
 }

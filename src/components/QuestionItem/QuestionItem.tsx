@@ -11,6 +11,8 @@ import {
   selectQuestionById,
   duplicateQuestionById,
   removeQuestionById,
+  selectFocusedQuestionIndex,
+  focusQuestion,
 } from "../../redux/slice/surveySlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { SelectChangeEvent, Switch, Tooltip } from "@mui/material";
@@ -26,6 +28,7 @@ function QuestionItem({ questionId, questionIndex }: Props) {
   const dispatch = useAppDispatch();
 
   const question = useAppSelector(selectQuestionById(questionId))!;
+  const isFocused = useAppSelector(selectFocusedQuestionIndex) === questionIndex;
 
   if (!question) return null;
 
@@ -51,27 +54,39 @@ function QuestionItem({ questionId, questionIndex }: Props) {
     }
   };
 
+  const handleItemClick = () => {
+    dispatch(focusQuestion(questionIndex));
+  };
+
   return (
     <Draggable draggableId={questionId} index={questionIndex} key={questionId}>
       {(provided) => (
-        <S.Container ref={provided.innerRef} {...provided.draggableProps}>
+        <S.Container
+          ref={provided.innerRef}
+          onClick={handleItemClick}
+          $isFocused={isFocused}
+          {...provided.draggableProps}
+        >
           <S.DraggableIcon src={dotsSixImg} {...provided.dragHandleProps} />
           <S.Row>
             <S.QuestionInput
-              variant="filled"
+              variant={isFocused ? "filled" : "standard"}
               size="small"
-              fullWidth={true}
+              fullWidth={isFocused}
               placeholder="질문"
               value={question?.text}
               onChange={handleTextChange}
+              $isFocused={isFocused}
             />
-            <S.TypeSelect value={question.type} onChange={handleTypeChange}>
-              {questionTypes.map((type) => (
-                <S.TypeOption key={type} value={type}>
-                  {type}
-                </S.TypeOption>
-              ))}
-            </S.TypeSelect>
+            {isFocused && (
+              <S.TypeSelect value={question.type} onChange={handleTypeChange}>
+                {questionTypes.map((type) => (
+                  <S.TypeOption key={type} value={type}>
+                    {type}
+                  </S.TypeOption>
+                ))}
+              </S.TypeSelect>
+            )}
           </S.Row>
           <S.Row>
             {["단답형", "장문형"].includes(question.type) ? (
@@ -80,23 +95,25 @@ function QuestionItem({ questionId, questionIndex }: Props) {
               <OptionList questionId={questionId} questionIndex={questionIndex} />
             )}
           </S.Row>
-          <S.Row>
-            <S.BottomIcons>
-              <Tooltip title="복사">
-                <Button size="small">
-                  <S.Icon src={copyImg} width="24px" onClick={handleDuplicateButtonClick} />
-                </Button>
-              </Tooltip>
-              <Tooltip title="삭제">
-                <Button size="small">
-                  <S.Icon src={trashCanImg} width="24px" onClick={handleRemoveButtonClick} />
-                </Button>
-              </Tooltip>
-            </S.BottomIcons>
-            <S.VerticalBar></S.VerticalBar>
-            필수
-            <Switch checked={question?.isRequired} onChange={handleIsRequiredChange} />
-          </S.Row>
+          {isFocused && (
+            <S.Footer>
+              <S.BottomIcons>
+                <Tooltip title="복사">
+                  <Button size="small">
+                    <S.Icon src={copyImg} width="24px" onClick={handleDuplicateButtonClick} />
+                  </Button>
+                </Tooltip>
+                <Tooltip title="삭제">
+                  <Button size="small">
+                    <S.Icon src={trashCanImg} width="24px" onClick={handleRemoveButtonClick} />
+                  </Button>
+                </Tooltip>
+              </S.BottomIcons>
+              <S.VerticalBar></S.VerticalBar>
+              필수
+              <Switch checked={question?.isRequired} onChange={handleIsRequiredChange} />
+            </S.Footer>
+          )}
         </S.Container>
       )}
     </Draggable>
