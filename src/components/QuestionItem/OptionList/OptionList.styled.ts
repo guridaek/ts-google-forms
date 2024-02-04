@@ -2,10 +2,6 @@ import { TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const Container = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
   width: 100%;
 `;
 
@@ -54,4 +50,12 @@ export const DraggableIcon = styled.img`
 
 export const CloseIcon = styled.img`
   width: 24px;
+`;
+
+export const DraggableListContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  width: 100%;
 `;
