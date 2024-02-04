@@ -16,7 +16,7 @@ import {
 } from "../../redux/slice/surveySlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { SelectChangeEvent, Switch, Tooltip } from "@mui/material";
-import { Button } from "../MenuBar/MenuBar.styled";
+import { Button } from "../Header/Header.styled";
 import { Draggable } from "react-beautiful-dnd";
 
 interface Props extends HTMLAttributes<HTMLLIElement> {

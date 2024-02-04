@@ -1,8 +1,8 @@
-import * as S from "./MenuBar.styled";
+import * as S from "./Header.styled";
 import eyeImg from "/assets/eye.png";
 import { Tooltip } from "@mui/material";
 
-function MenuBar() {
+function Header() {
   return (
     <S.Container>
       <Tooltip title="미리보기">
@@ -14,4 +14,4 @@ function MenuBar() {
   );
 }
 
-export default MenuBar;
+export default Header;

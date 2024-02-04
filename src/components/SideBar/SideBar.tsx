@@ -3,7 +3,7 @@ import addImg from "/assets/addCircle.svg";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addQuestion, focusQuestion, selectQuestionList } from "../../redux/slice/surveySlice";
 import { Tooltip } from "@mui/material";
-import { Button } from "../MenuBar/MenuBar.styled";
+import { Button } from "../Header/Header.styled";
 
 function SideBar() {
   const dispatch = useAppDispatch();

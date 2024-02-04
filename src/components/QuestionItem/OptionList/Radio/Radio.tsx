@@ -13,7 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import dotsSixVerticalImg from "/assets/dotsSixVertical.svg";
 import closeImg from "/assets/close.svg";
-import { Button } from "../../../MenuBar/MenuBar.styled";
+import { Button } from "../../../Header/Header.styled";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
