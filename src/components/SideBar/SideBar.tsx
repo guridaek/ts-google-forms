@@ -1,5 +1,5 @@
 import * as S from "./SideBar.styled";
-import addImg from "../../assets/addCircle.svg";
+import addImg from "/assets/addCircle.svg";
 import { useAppDispatch } from "../../redux/hooks";
 import { addQuestion } from "../../redux/slice/surveySlice";
 import { Tooltip } from "@mui/material";

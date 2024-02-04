@@ -1,5 +1,5 @@
 import * as S from "./MenuBar.styled";
-import eyeImg from "../../assets/eye.png";
+import eyeImg from "/assets/eye.png";
 import { Tooltip } from "@mui/material";
 
 function MenuBar() {

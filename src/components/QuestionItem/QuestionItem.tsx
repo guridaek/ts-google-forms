@@ -1,8 +1,8 @@
 import { ChangeEvent, HTMLAttributes } from "react";
 import * as S from "./QuestionItem.styled";
-import dotsSixImg from "../../assets/dotsSix.svg";
-import copyImg from "../../assets/copy.svg";
-import trashCanImg from "../../assets/trashCan.svg";
+import dotsSixImg from "/assets/dotsSix.svg";
+import copyImg from "/assets/copy.svg";
+import trashCanImg from "/assets/trashCan.svg";
 import OptionList from "./OptionList/OptionList";
 import {
   QuestionType,
@@ -19,10 +19,10 @@ import { Draggable } from "react-beautiful-dnd";
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
   questionId: string;
-  index: number;
+  questionIndex: number;
 }
 
-function QuestionItem({ questionId, index }: Props) {
+function QuestionItem({ questionId, questionIndex }: Props) {
   const dispatch = useAppDispatch();
 
   const question = useAppSelector(selectQuestionById(questionId))!;
@@ -52,7 +52,7 @@ function QuestionItem({ questionId, index }: Props) {
   };
 
   return (
-    <Draggable draggableId={questionId} index={index} key={questionId}>
+    <Draggable draggableId={questionId} index={questionIndex} key={questionId}>
       {(provided) => (
         <S.Container ref={provided.innerRef} {...provided.draggableProps}>
           <S.DraggableIcon src={dotsSixImg} {...provided.dragHandleProps} />
@@ -77,7 +77,7 @@ function QuestionItem({ questionId, index }: Props) {
             {["단답형", "장문형"].includes(question.type) ? (
               <S.Answer>{`${question?.type} 텍스트`}</S.Answer>
             ) : (
-              <OptionList questionId={questionId} />
+              <OptionList questionId={questionId} questionIndex={questionIndex} />
             )}
           </S.Row>
           <S.Row>

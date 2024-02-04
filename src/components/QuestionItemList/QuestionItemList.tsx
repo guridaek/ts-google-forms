@@ -65,7 +65,7 @@ function QuestionItemList() {
           {(provided) => (
             <S.SurveyListContainer {...provided.droppableProps} ref={provided.innerRef}>
               {questions.map((question, idx) => (
-                <QuestionItem key={question.id} questionId={question.id} index={idx} />
+                <QuestionItem key={question.id} questionId={question.id} questionIndex={idx} />
               ))}
               {provided.placeholder}
             </S.SurveyListContainer>
