@@ -31,9 +31,24 @@ const initialState: SurveyState = {
   questionList: [],
 };
 
-interface ReorderPayload {
+interface ReorderQuestionPayload {
   startIndex: number;
   endIndex: number;
+}
+
+interface ReorderOptionPayload extends ReorderQuestionPayload {
+  questionIndex: number;
+}
+
+interface SetOptionPayload {
+  questionIndex: number;
+  optionId: string;
+  text: string;
+}
+
+interface RemoveOptionPayload {
+  questionIndex: number;
+  optionId: string;
 }
 
 export const surveySlice = createSlice({
@@ -98,7 +113,7 @@ export const surveySlice = createSlice({
         return question;
       });
     },
-    reorderQuestion: (state, action: PayloadAction<ReorderPayload>) => {
+    reorderQuestion: (state, action: PayloadAction<ReorderQuestionPayload>) => {
       const { startIndex, endIndex } = action.payload;
 
       const updatedList = [...state.questionList];
@@ -106,6 +121,40 @@ export const surveySlice = createSlice({
       updatedList.splice(endIndex, 0, removedQuestion);
 
       state.questionList = updatedList;
+    },
+    reorderOption: (state, action: PayloadAction<ReorderOptionPayload>) => {
+      const { questionIndex, startIndex, endIndex } = action.payload;
+
+      const updatedList = [...state.questionList];
+      const [removedOption] = updatedList[questionIndex].options.splice(startIndex, 1);
+
+      updatedList[questionIndex].options.splice(endIndex, 0, removedOption);
+
+      state.questionList = updatedList;
+    },
+    setOption: (state, action: PayloadAction<SetOptionPayload>) => {
+      const { questionIndex, optionId, text } = action.payload;
+
+      const options = state.questionList[questionIndex].options;
+
+      const updatedOptions = options.map((option) =>
+        option.id === optionId ? { ...option, text: text } : option
+      );
+
+      state.questionList = state.questionList.map((question, idx) =>
+        idx === questionIndex ? { ...question, options: updatedOptions } : question
+      );
+    },
+    removeOption: (state, action: PayloadAction<RemoveOptionPayload>) => {
+      const { questionIndex, optionId } = action.payload;
+
+      const options = state.questionList[questionIndex].options;
+
+      const updatedOptions = options.filter((option) => option.id !== optionId);
+
+      state.questionList = state.questionList.map((question, idx) =>
+        idx === questionIndex ? { ...question, options: updatedOptions } : question
+      );
     },
   },
 });
@@ -119,6 +168,9 @@ export const {
   duplicateQuestionById,
   addOptionById,
   reorderQuestion,
+  reorderOption,
+  setOption,
+  removeOption,
 } = surveySlice.actions;
 
 export const selectTitle = (state: RootState) => state.survey.title;
