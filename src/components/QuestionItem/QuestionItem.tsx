@@ -46,6 +46,10 @@ function QuestionItem({ questionId, questionIndex }: Props) {
 
   const handleDuplicateButtonClick = () => {
     dispatch(duplicateQuestionById(questionId));
+
+    setTimeout(() => {
+      dispatch(focusQuestion(questionIndex + 1));
+    }, 0);
   };
 
   const handleRemoveButtonClick = () => {

@@ -1,15 +1,25 @@
 import * as S from "./SideBar.styled";
 import addImg from "/assets/addCircle.svg";
-import { useAppDispatch } from "../../redux/hooks";
-import { addQuestion } from "../../redux/slice/surveySlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { addQuestion, focusQuestion, selectQuestionList } from "../../redux/slice/surveySlice";
 import { Tooltip } from "@mui/material";
 import { Button } from "../MenuBar/MenuBar.styled";
 
 function SideBar() {
   const dispatch = useAppDispatch();
+  const questionList = useAppSelector(selectQuestionList);
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    }, 0);
+  };
 
   const handleAddButtonClick = () => {
+    dispatch(focusQuestion(questionList.length));
     dispatch(addQuestion());
+
+    scrollToBottom();
   };
 
   return (
