@@ -14,9 +14,13 @@ export const Body = styled.div`
   display: flex;
   gap: 14px;
 
-  width: 60%;
+  width: 760px;
 
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 100px;
+
+  @media (max-width: 760px) {
+    width: 95%;
+  }
 `;
