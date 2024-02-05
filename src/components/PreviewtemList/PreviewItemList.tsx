@@ -2,8 +2,9 @@ import * as S from "./PreviewItemList.styled";
 import { useAppSelector } from "../../redux/hooks";
 import { selectDescription, selectQuestionList, selectTitle } from "../../redux/slice/surveySlice";
 import PreviewItem from "../PreviewItem/PreviewItem";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function PreviewItemList() {
   const title = useAppSelector(selectTitle);
@@ -14,7 +15,15 @@ function PreviewItemList() {
 
   const { register, handleSubmit, formState } = useForm();
 
-  const onSubmit = (data: unknown) => console.log(data);
+  const navigate = useNavigate();
+
+  const handleSurveySubmit = (data: FieldValues) => {
+    navigate("/result", {
+      state: {
+        answers: data,
+      },
+    });
+  };
 
   return (
     <S.Container>
@@ -23,7 +32,7 @@ function PreviewItemList() {
         <S.Description>{description}</S.Description>
         {hasRequiredQuestion && <S.Guide>* 표시는 필수 질문임</S.Guide>}
       </S.SurveyTitleContainer>
-      <S.SurveyForm onSubmit={handleSubmit(onSubmit)}>
+      <S.SurveyForm onSubmit={handleSubmit(handleSurveySubmit)}>
         {questions.map((question) => (
           <PreviewItem
             key={question.id}
