@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
   MenuItem,
@@ -109,13 +110,23 @@ function PreviewItem({ questionId, register, formState }: Props) {
             {question.isRequired && <S.RequiredMark> *</S.RequiredMark>}
           </S.title>
           <S.DropdownContainer>
-            <Select fullWidth {...register(questionId, { required: question.isRequired })}>
-              {question.options.map((option) => (
-                <MenuItem key={option.id} value={option.text}>
-                  {option.text}
+            <FormControl sx={{ minWidth: "300px" }}>
+              <Select
+                displayEmpty
+                autoWidth
+                defaultValue=""
+                {...register(questionId, { required: question.isRequired })}
+              >
+                <MenuItem value="" disabled>
+                  선택
                 </MenuItem>
-              ))}
-            </Select>
+                {question.options.map((option) => (
+                  <MenuItem key={option.id} value={option.text}>
+                    {option.text}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </S.DropdownContainer>
           {isError && <S.ErrorMessage>필수 질문입니다.</S.ErrorMessage>}
         </S.Container>

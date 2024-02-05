@@ -31,9 +31,7 @@ export const RequiredMark = styled.span`
   color: #d93025;
 `;
 
-export const DropdownContainer = styled.div`
-  min-width: 200px;
-`;
+export const DropdownContainer = styled.div``;
 
 export const ErrorMessage = styled.p`
   color: #d93025;
