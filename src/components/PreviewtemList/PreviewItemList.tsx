@@ -5,6 +5,7 @@ import PreviewItem from "../PreviewItem/PreviewItem";
 import { FieldValues, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { FormEvent } from "react";
 
 function PreviewItemList() {
   const title = useAppSelector(selectTitle);
@@ -25,6 +26,14 @@ function PreviewItemList() {
     });
   };
 
+  const handleReset = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (confirm("양식을 지우시겠습니까?")) {
+      window.location.reload();
+    }
+  };
+
   return (
     <S.Container>
       <S.SurveyTitleContainer>
@@ -32,7 +41,7 @@ function PreviewItemList() {
         <S.Description>{description}</S.Description>
         {hasRequiredQuestion && <S.Guide>* 표시는 필수 질문임</S.Guide>}
       </S.SurveyTitleContainer>
-      <S.SurveyForm onSubmit={handleSubmit(handleSurveySubmit)}>
+      <S.SurveyForm onSubmit={handleSubmit(handleSurveySubmit)} onReset={handleReset}>
         {questions.map((question) => (
           <PreviewItem
             key={question.id}
