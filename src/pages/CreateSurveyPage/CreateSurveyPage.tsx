@@ -1,9 +1,9 @@
-import MenuBar from "../components/MenuBar/MenuBar";
-import QuestionItemList from "../components/QuestionItemList/QuestionItemList";
-import SideBar from "../components/SideBar/SideBar";
+import Header from "../../components/Header/Header";
+import QuestionItemList from "../../components/QuestionItemList/QuestionItemList";
+import SideBar from "../../components/SideBar/SideBar";
 import * as S from "./CreateSurveyPage.styled";
-import { focusQuestion } from "../redux/slice/surveySlice";
-import { useAppDispatch } from "../redux/hooks";
+import { focusQuestion } from "../../redux/slice/surveySlice";
+import { useAppDispatch } from "../../redux/hooks";
 import { MouseEvent } from "react";
 
 function CreateSurveyPage() {
@@ -17,7 +17,7 @@ function CreateSurveyPage() {
 
   return (
     <S.Container onClick={handlePageClick}>
-      <MenuBar />
+      <Header />
       <S.Body>
         <QuestionItemList />
         <SideBar />
