@@ -7,10 +7,12 @@ import {
   Radio,
   RadioGroup,
   Select,
+  TextField,
 } from "@mui/material";
 import { useAppSelector } from "../../redux/hooks";
-import { selectQuestionById } from "../../redux/slice/surveySlice";
+import { OTHER_OPTION_ID, selectQuestionById } from "../../redux/slice/surveySlice";
 import * as S from "./ResultItem.styled";
+import { OtherOptionInputContainer } from "../PreviewItem/PreviewItem.styled";
 
 interface Props {
   questionId: string;
@@ -67,6 +69,21 @@ function ResultItem({ questionId, answer, selectedOptionIds }: Props) {
                 checked={selectedOptionIds?.includes(option.id)}
               />
             ))}
+            {question.hasOtherOption && (
+              <FormControlLabel
+                value={OTHER_OPTION_ID}
+                control={
+                  <Radio readOnly disabled={!selectedOptionIds?.includes(OTHER_OPTION_ID)} />
+                }
+                label={
+                  <OtherOptionInputContainer>
+                    기타:
+                    <TextField variant="standard" value={question.otherOption} />
+                  </OtherOptionInputContainer>
+                }
+                checked={selectedOptionIds?.includes(OTHER_OPTION_ID)}
+              />
+            )}
           </RadioGroup>
         </S.Container>
       );
@@ -87,6 +104,21 @@ function ResultItem({ questionId, answer, selectedOptionIds }: Props) {
                 checked={selectedOptionIds?.includes(option.id)}
               />
             ))}
+            {question.hasOtherOption && (
+              <FormControlLabel
+                value={OTHER_OPTION_ID}
+                control={
+                  <Checkbox readOnly disabled={!selectedOptionIds?.includes(OTHER_OPTION_ID)} />
+                }
+                label={
+                  <OtherOptionInputContainer>
+                    기타:
+                    <TextField variant="standard" value={question.otherOption} />
+                  </OtherOptionInputContainer>
+                }
+                checked={selectedOptionIds?.includes(OTHER_OPTION_ID)}
+              />
+            )}
           </FormGroup>
         </S.Container>
       );

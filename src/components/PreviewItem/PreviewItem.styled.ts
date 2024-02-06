@@ -36,3 +36,11 @@ export const DropdownContainer = styled.div``;
 export const ErrorMessage = styled.p`
   color: #d93025;
 `;
+
+export const OtherOptionInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+`;

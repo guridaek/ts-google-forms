@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { type RootState } from "../store";
 
+export const OTHER_OPTION_ID = "other";
+
 export const questionTypes = ["단답형", "장문형", "객관식 질문", "체크박스", "드롭다운"] as const;
 
 export type QuestionType = (typeof questionTypes)[number];
@@ -17,6 +19,7 @@ export interface Question {
   isRequired: boolean;
   options: Option[];
   hasOtherOption: boolean;
+  otherOption?: string;
 }
 
 export interface SurveyState {

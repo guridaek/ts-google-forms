@@ -7,11 +7,13 @@ import {
   Radio,
   RadioGroup,
   Select,
+  TextField,
 } from "@mui/material";
-import { useAppSelector } from "../../redux/hooks";
-import { selectQuestionById } from "../../redux/slice/surveySlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { OTHER_OPTION_ID, selectQuestionById, setQuestion } from "../../redux/slice/surveySlice";
 import * as S from "./PreviewItem.styled";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import { FocusEvent } from "react";
 
 interface Props {
   questionId: string;
@@ -22,9 +24,15 @@ interface Props {
 function PreviewItem({ questionId, register, formState }: Props) {
   const question = useAppSelector(selectQuestionById(questionId));
 
+  const dispatch = useAppDispatch();
+
   if (!question) return null;
 
   const isError = questionId in formState.errors;
+
+  const handleOtherOptionBlur = (e: FocusEvent<HTMLInputElement>) => {
+    dispatch(setQuestion({ ...question, otherOption: e.target.value }));
+  };
 
   switch (question.type) {
     case "단답형":
@@ -77,6 +85,19 @@ function PreviewItem({ questionId, register, formState }: Props) {
                 {...register(questionId, { required: question.isRequired })}
               />
             ))}
+            {question.hasOtherOption && (
+              <FormControlLabel
+                value={OTHER_OPTION_ID}
+                control={<Radio />}
+                label={
+                  <S.OtherOptionInputContainer>
+                    기타:
+                    <TextField variant="standard" onBlur={handleOtherOptionBlur} />
+                  </S.OtherOptionInputContainer>
+                }
+                {...register(questionId, { required: question.isRequired })}
+              />
+            )}
           </RadioGroup>
           {isError && <S.ErrorMessage>필수 질문입니다.</S.ErrorMessage>}
         </S.Container>
@@ -98,6 +119,19 @@ function PreviewItem({ questionId, register, formState }: Props) {
                 {...register(questionId, { required: question.isRequired })}
               />
             ))}
+            {question.hasOtherOption && (
+              <FormControlLabel
+                value={OTHER_OPTION_ID}
+                control={<Checkbox />}
+                label={
+                  <S.OtherOptionInputContainer>
+                    기타:
+                    <TextField variant="standard" onBlur={handleOtherOptionBlur} />
+                  </S.OtherOptionInputContainer>
+                }
+                {...register(questionId, { required: question.isRequired })}
+              />
+            )}
           </FormGroup>
           {isError && <S.ErrorMessage>필수 질문입니다.</S.ErrorMessage>}
         </S.Container>
