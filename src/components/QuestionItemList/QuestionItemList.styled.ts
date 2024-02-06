@@ -19,7 +19,7 @@ export const SurveyTitleContainer = styled.li`
   border: 1px solid lightgray;
   border-top: 10px solid #673ab7;
   border-radius: 8px;
-  padding: 20px 20px 5px 20px;
+  padding: 20px;
   box-sizing: border-box;
 
   background-color: white;
@@ -27,6 +27,7 @@ export const SurveyTitleContainer = styled.li`
   &:focus-within {
     border-left: 7px solid skyblue;
     padding-left: 14px;
+    box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.2);
   }
 `;
 

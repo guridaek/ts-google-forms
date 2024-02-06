@@ -16,6 +16,7 @@ export const Container = styled.li<{ $isFocused: boolean }>`
 
   border-left: ${({ $isFocused }) => $isFocused && "7px solid skyblue"};
   padding-left: ${({ $isFocused }) => $isFocused && "14px"};
+  box-shadow: ${({ $isFocused }) => $isFocused && "1px 3px 4px rgba(0,0,0,.2)"};
 `;
 
 export const QuestionInput = styled(TextField)<{ $isFocused: boolean }>`

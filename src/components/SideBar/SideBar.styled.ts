@@ -10,6 +10,7 @@ export const Container = styled.aside`
   width: 50px;
   height: 200px;
 
+  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   border-radius: 6px;
   border: 1px solid lightgray;
