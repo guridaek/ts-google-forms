@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
-// import { questions } from "../../mocks/questions";
+import { type RootState } from "../store";
 
 export const questionTypes = ["단답형", "장문형", "객관식 질문", "체크박스", "드롭다운"] as const;
 

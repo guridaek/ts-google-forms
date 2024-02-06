@@ -67,7 +67,7 @@ function PreviewItem({ questionId, register, formState }: Props) {
             {question.text}
             {question.isRequired && <S.RequiredMark> *</S.RequiredMark>}
           </S.title>
-          <RadioGroup aria-labelledby="survey-group">
+          <RadioGroup>
             {question.options.map((option) => (
               <FormControlLabel
                 key={option.id}
