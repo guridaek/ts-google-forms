@@ -71,7 +71,7 @@ function PreviewItem({ questionId, register, formState }: Props) {
             {question.options.map((option) => (
               <FormControlLabel
                 key={option.id}
-                value={option.text}
+                value={option.id}
                 control={<Radio />}
                 label={option.text}
                 {...register(questionId, { required: question.isRequired })}
@@ -92,7 +92,7 @@ function PreviewItem({ questionId, register, formState }: Props) {
             {question.options.map((option) => (
               <FormControlLabel
                 key={option.id}
-                value={option.text}
+                value={option.id}
                 control={<Checkbox />}
                 label={option.text}
                 {...register(questionId, { required: question.isRequired })}
@@ -121,7 +121,7 @@ function PreviewItem({ questionId, register, formState }: Props) {
                   선택
                 </MenuItem>
                 {question.options.map((option) => (
-                  <MenuItem key={option.id} value={option.text}>
+                  <MenuItem key={option.id} value={option.id}>
                     {option.text}
                   </MenuItem>
                 ))}

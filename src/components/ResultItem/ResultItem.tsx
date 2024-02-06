@@ -15,10 +15,10 @@ import * as S from "./ResultItem.styled";
 interface Props {
   questionId: string;
   answer?: string;
-  selectedOptions?: string[];
+  selectedOptionIds?: string[];
 }
 
-function ResultItem({ questionId, answer, selectedOptions }: Props) {
+function ResultItem({ questionId, answer, selectedOptionIds }: Props) {
   const question = useAppSelector(selectQuestionById(questionId));
 
   if (!question) return null;
@@ -61,10 +61,10 @@ function ResultItem({ questionId, answer, selectedOptions }: Props) {
             {question.options.map((option) => (
               <FormControlLabel
                 key={option.id}
-                value={option.text}
-                control={<Radio readOnly disabled={!selectedOptions?.includes(option.text)} />}
+                value={option.id}
+                control={<Radio readOnly disabled={!selectedOptionIds?.includes(option.id)} />}
                 label={option.text}
-                checked={selectedOptions?.includes(option.text)}
+                checked={selectedOptionIds?.includes(option.id)}
               />
             ))}
           </RadioGroup>
@@ -82,9 +82,9 @@ function ResultItem({ questionId, answer, selectedOptions }: Props) {
               <FormControlLabel
                 key={option.id}
                 value={option.text}
-                control={<Checkbox readOnly disabled={!selectedOptions?.includes(option.text)} />}
+                control={<Checkbox readOnly disabled={!selectedOptionIds?.includes(option.id)} />}
                 label={option.text}
-                checked={selectedOptions?.includes(option.text)}
+                checked={selectedOptionIds?.includes(option.id)}
               />
             ))}
           </FormGroup>
@@ -102,14 +102,14 @@ function ResultItem({ questionId, answer, selectedOptions }: Props) {
               <Select
                 displayEmpty
                 autoWidth
-                value={selectedOptions ? selectedOptions[0] : ""}
+                value={selectedOptionIds ? selectedOptionIds[0] : ""}
                 disabled
               >
                 <MenuItem value="" disabled>
                   선택
                 </MenuItem>
                 {question.options.map((option) => (
-                  <MenuItem key={option.id} value={option.text}>
+                  <MenuItem key={option.id} value={option.id}>
                     {option.text}
                   </MenuItem>
                 ))}

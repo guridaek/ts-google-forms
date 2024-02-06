@@ -38,7 +38,7 @@ function ResultItemList({ answers }: Props) {
             <ResultItem
               key={question.id}
               questionId={question.id}
-              selectedOptions={
+              selectedOptionIds={
                 typeof answers[question.id] === "string"
                   ? [answers[question.id]]
                   : answers[question.id]
