@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# ts-google-forms
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+typescript + React + Redux로 구현한 구글 폼입니다.
 
-Currently, two official plugins are available:
+## 기술스택
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Vite
+- React + TypeScript
+- Redux + Redux Toolkit
+- Redux-persist
+- MUI
+- Styled-components
+- React-hook-form
+- React-beautiful-dnd
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+`npm install`
 
-- Configure the top-level `parserOptions` property like this:
+`npm run dev`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+open http://localhost:5173/
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 주요 기능
+
+- 설문지 제목, 설명 수정
+- 질문 문항 추가, 복사, 삭제
+- 문항 순서 드래그 앤 드롭
+- 문항 타입 (단답형/장문형/객관식/체크박스/드롭다운) 변경
+- 필수 문항 설정
+- 옵션 추가, 삭제
+- 옵션 순서 드래그 앤 드롭
+- 설문지 미리보기
+- 설문지 응답 확인
+- 설문지 응답 초기화
+- 설문지 데이터 저장
